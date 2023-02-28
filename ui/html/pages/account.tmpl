@@ -1,0 +1,25 @@
+{{define "title"}}Your Account{{end}}
+
+{{define "main"}}
+    <div class="box has-background-grey-lighter">
+        <table class="table has-background-grey-light has-text-grey-dark">
+            <tr>
+                <td><strong>Name</strong></td>
+                <td>{{.Form.Name}}</td>
+            </tr>
+            <tr>
+                <td><strong>Email</strong></td>
+                <td>{{.Form.Email}}</td>
+            </tr>
+            <tr>
+                <td><strong>Joined</strong></td>
+                <td>{{.Form.Joined}}</td>
+            </tr>
+            <tr>
+                <td><strong>Password</strong></td>
+                <td><a href='/account/password/update'>Change password</a></td>
+            </tr>
+        </table>
+    </div>
+{{end}}
+

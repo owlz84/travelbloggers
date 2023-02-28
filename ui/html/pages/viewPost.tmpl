@@ -1,0 +1,20 @@
+{{define "title"}}Post{{end}}
+
+{{define "main"}}
+<h1 class="title has-text-grey-darker">Posts in <a href="/blogs/view/{{.Form.BlogID}}">{{.Form.BlogName}}</a></h1>
+<p class="subtitle has-text-grey-dark">Published by: {{.Form.OwnerName}}</p>
+<div class="block px-6">
+    <div class="box has-background-light has-text-dark">
+        <div class="title is-2 has-text-grey">{{.Post.Title}}</div>
+        <div class="block">Country: {{.Post.Country}}</div>
+        <div class="block">Date from: {{.Post.DateFrom | humanDate}}</div>
+        <div class="block">Date to: {{.Post.DateTo | humanDate}}</div>
+        <div class="content has-text-grey">{{.Post.Content | markdownProcessor}}</div>
+    </div>
+</div>
+{{ if and .IsAuthenticated .Form.ViewerIsAuthor }}
+<div>
+    <a class="button is-primary" href="/posts/edit/{{.Form.PostID}}">Edit post</a>
+</div>
+{{end}}
+{{end}}

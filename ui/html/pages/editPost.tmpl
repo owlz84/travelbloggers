@@ -1,0 +1,97 @@
+{{define "title"}}Edit Blog Post{{end}}
+
+{{define "main"}}
+<form class="box" action='/posts/edit/{{.Form.PostID}}' method='POST'>
+    <input type="hidden" id="post_id" name="post_id" value="{{.Form.PostID}}">
+    <div>
+        {{range .Form.NonFieldErrors}}
+        <article class="message is-danger">
+            <div class="message-body">
+                {{.}}
+            </div>
+        </article>
+        {{end}}
+    </div>
+    <div>
+        <label class="label">Title:</label>
+        <!-- Use the `with` action to render the value of .Form.FieldErrors.title
+        if it is not empty. -->
+        {{with .Form.FieldErrors.title}}
+        <article class="message is-danger">
+            <div class="message-body">
+                {{.}}
+            </div>
+        </article>
+        {{end}}
+        <div class="control">
+            <input class="input" type='text' name='title' value='{{.Form.Title}}'>
+        </div>
+    </div>
+    <div>
+        <label>Content:</label>
+        <!-- Likewise render the value of .Form.FieldErrors.content if it is not
+        empty. -->
+        {{with .Form.FieldErrors.content}}
+        <article class="message is-danger">
+            <div class="message-body">
+                {{.}}
+            </div>
+        </article>
+        {{end}}
+        <!-- Re-populate the content data as the inner HTML of the textarea. -->
+        <textarea class="textarea" name='content' rows="25  ">{{.Form.Content}}</textarea>
+    </div>
+    <div>
+        <label>Country:</label>
+        <!-- Use the `with` action to render the value of .Form.FieldErrors.title
+        if it is not empty. -->
+        {{with .Form.FieldErrors.country}}
+        <article class="message is-danger">
+            <div class="message-body">
+                {{.}}
+            </div>
+        </article>
+        {{end}}
+        <div class="control">
+            <select class="select" name="country" id="country">
+                {{$country_value:=.Form.Country}}
+                {{range .Form.CountryList}}
+                {{ if eq . $country_value}}
+                <option value="{{.}}" selected="selected">{{.}}</option>
+                {{ else }}
+                <option value="{{.}}">{{.}}</option>
+                {{ end }}
+                {{end}}
+            </select>
+        </div>
+    </div>
+    <div class="control">
+        <label>Date from:</label>
+        {{with .Form.FieldErrors.datefrom}}
+        <article class="message is-danger">
+            <div class="message-body">
+                {{.}}
+            </div>
+        </article>
+        {{end}}
+        <input class="input" type="date" id="datefrom" name="datefrom" value='{{.Form.DateFrom | RFC3339}}'>
+    </div>
+    <div class="control">
+        <label>Date to:</label>
+        {{with .Form.FieldErrors.dateto}}
+        <article class="message is-danger">
+            <div class="message-body">
+                {{.}}
+            </div>
+        </article>
+        {{end}}
+        <input class="input" type="date" id="dateto" name="dateto" value='{{.Form.DateTo | RFC3339}}'>
+    </div>
+    <div>
+        <button class="button is-primary">Publish post</button>
+    </div>
+</form>
+<div>
+    <a class="button is-primary" href="/images/upload" target="_blank" rel="noopener noreferrer">Upload images</a>
+</div>
+{{end}}

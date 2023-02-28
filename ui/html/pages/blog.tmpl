@@ -1,0 +1,17 @@
+{{define "title"}}Blog{{end}}
+
+{{define "main"}}
+<h1 class="title has-text-grey-darker">Posts in <a href="/blogs/view/{{.Form.BlogID}}">{{.Form.BlogName}}</a></h1>
+<p class="subtitle has-text-grey-dark">Published by: {{.Form.OwnerName}}</p>
+{{range .Posts}}
+<div class="block px-6">
+    <div class="box has-background-light has-text-dark">
+        <div class="title is-2 has-text-grey"><a href="/posts/view/{{.ID}}">{{.Title}}</a></div>
+        <div class="block">Country: {{.Country}}</div>
+        <div class="block">Date from: {{.DateFrom | humanDate}}</div>
+        <div class="block">Date to: {{.DateTo | humanDate}}</div>
+        <div class="content has-text-grey">{{.Content | limitText | markdownProcessor}}</div>
+    </div>
+</div>
+{{end}}
+{{end}}

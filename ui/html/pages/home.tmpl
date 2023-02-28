@@ -1,0 +1,27 @@
+{{define "title"}}Home{{end}}
+
+{{define "main"}}
+    <div class="title is-2 has-text-grey">Latest Posts</div>
+    {{if .Posts}}
+     <table class="table has-text-grey-dark is-striped is-hoverable is-fullwidth">
+        <tr>
+            <th>Post</th>
+            <th>Country</th>
+            <th>Blog</th>
+            <th>User</th>
+            <th>Created</th>
+        </tr>
+        {{range .Posts}}
+        <tr>
+            <td><a href='/posts/view/{{.ID}}'>{{.Title}}</a></td>
+            <td>{{.Country}}</td>
+            <td><a href='/blogs/view/{{.BlogID}}'>{{.BlogName}}</a></td>
+            <td><a href='/users/view/{{.UserID}}'>{{.UserName}}</a></td>
+            <td>{{.Created}}</td>
+        </tr>
+        {{end}}
+    </table>
+    {{else}}
+        <p>There's nothing to see here... yet!</p>
+    {{end}}
+{{end}}

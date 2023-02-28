@@ -1,0 +1,34 @@
+{{define "title"}}Upload image(s){{end}}
+{{define "main"}}
+<form class="box" enctype="multipart/form-data" action="/images/upload" method="post">
+    <div class="control">
+        <input class="input" type='file' name='img' multiple/>
+    </div>
+    <div>
+        <button class="button is-primary">Upload</button>
+    </div>
+    {{if .Form}}
+    <table class="table">
+        <tr>
+            <th>Thumbnail</th>
+            <th>Path</th>
+        </tr>
+        {{range .Form.Images}}
+        <tr>
+            <td><img src="{{.ThumbnailPath}}" width="256" height="256"></td>
+            <td>
+                <p>
+                    &lt;figure&gt;<br>
+                    &lt;img width=&quot;40%&quot; src=&quot;{{.ImagePath}}&quot;&gt;<br>
+                    &lt;figcaption&gt;Add caption here&lt;/figcaption&gt;<br>
+                    &lt;/figure&gt;
+                </p>
+            </td>
+        </tr>
+        {{end}}
+    </table>
+    {{else}}
+    Nothing to see here
+    {{end}}
+</form>
+{{end}}
