@@ -8,6 +8,7 @@
     <div class="box has-background-light has-text-dark">
         <div class="title is-2 has-text-grey"><a href="/posts/view/{{.ID}}">{{.Title}}</a></div>
         <div class="block">Country: {{.Country}}</div>
+        <div class="block">Location: {{.Location}}</div>
         <div class="block">Date from: {{.DateFrom | humanDate}}</div>
         <div class="block">Date to: {{.DateTo | humanDate}}</div>
         <div class="content has-text-grey">{{.Content | limitText | markdownProcessor}}</div>

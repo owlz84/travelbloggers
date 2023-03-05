@@ -2,20 +2,10 @@ package main
 
 import (
 	"fmt"
-	"github.com/russross/blackfriday/v2"
+	"github.com/gomarkdown/markdown"
 	"html/template"
 	"time"
-	"travelbloggers/internal/models"
 )
-
-type templateData struct {
-	CurrentYear     int
-	Post            *models.Post
-	Posts           []*models.Post
-	Form            any
-	Flash           string
-	IsAuthenticated bool
-}
 
 func humanTime(t time.Time) string {
 	if t.IsZero() {
@@ -41,10 +31,9 @@ func RFC3339(t time.Time) string {
 }
 
 func markdownProcessor(args ...interface{}) template.HTML {
-	//extensions := parser.CommonExtensions | parser.AutoHeadingIDs
-	//customParser := parser.NewWithExtensions(extensions)
-	//htmlBytes := markdown.ToHTML([]byte(fmt.Sprintf("%s", args...)), customParser, nil)
-	htmlBytes := blackfriday.Run([]byte(fmt.Sprintf("%s", args...)))
+	md := []byte(fmt.Sprintf("%s", args...))
+	htmlBytes := markdown.ToHTML(md, nil, nil)
+
 	return template.HTML(htmlBytes)
 }
 

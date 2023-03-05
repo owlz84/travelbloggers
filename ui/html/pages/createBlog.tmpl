@@ -1,0 +1,17 @@
+{{define "title"}}Create a new blog{{end}}
+
+{{define "main"}}
+<form class="box" action='/blogs/create' method='POST'>
+    <div class="block">
+        <label class="label">Name for new blog:</label>
+    </div>
+    <div class="block">
+        <div class="control">
+            <input class="input" type='text' name='name' value='{{.Form.Name}}'/>
+        </div>
+    </div>
+    <div class="block">
+        <button class="button is-primary">Create</button>
+    </div>
+</form>
+{{end}}

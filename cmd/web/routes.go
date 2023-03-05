@@ -29,16 +29,19 @@ func (app *application) routes() http.Handler {
 
 	protected := dynamic.Append(app.requireAuthentication)
 
+	router.Handler(http.MethodPost, "/user/logout", protected.ThenFunc(app.userLogoutPost))
+	router.Handler(http.MethodGet, "/account/view", protected.ThenFunc(app.accountView))
+	router.Handler(http.MethodGet, "/account/password/update", protected.ThenFunc(app.accountPasswordUpdate))
+	router.Handler(http.MethodPost, "/account/password/update", protected.ThenFunc(app.accountPasswordUpdatePost))
+	router.Handler(http.MethodGet, "/blogs/create", protected.ThenFunc(app.blogCreate))
+	router.Handler(http.MethodPost, "/blogs/create", protected.ThenFunc(app.blogCreatePost))
+	router.Handler(http.MethodPost, "/blogs/delete", protected.ThenFunc(app.blogDeletePost))
 	router.Handler(http.MethodGet, "/posts/create", protected.ThenFunc(app.postPublish))
 	router.Handler(http.MethodPost, "/posts/create", protected.ThenFunc(app.postPublishPost))
 	router.Handler(http.MethodGet, "/posts/edit/:id", protected.ThenFunc(app.postEdit))
 	router.Handler(http.MethodPost, "/posts/edit/:id", protected.ThenFunc(app.postEditPost))
 	router.Handler(http.MethodGet, "/images/upload", protected.ThenFunc(app.uploadImage))
 	router.Handler(http.MethodPost, "/images/upload", protected.ThenFunc(app.uploadImagePost))
-	router.Handler(http.MethodPost, "/user/logout", protected.ThenFunc(app.userLogoutPost))
-	router.Handler(http.MethodGet, "/account/view", protected.ThenFunc(app.accountView))
-	router.Handler(http.MethodGet, "/account/password/update", protected.ThenFunc(app.accountPasswordUpdate))
-	router.Handler(http.MethodPost, "/account/password/update", protected.ThenFunc(app.accountPasswordUpdatePost))
 
 	standard := alice.New(app.recoverPanic, app.logRequest, secureHeaders)
 

@@ -15,6 +15,7 @@ type BlogModelInterface interface {
 	Insert(ownerID int, name string) (int, error)
 	Get(id int) (*Blog, error)
 	GetByOwner(id int) ([]*Blog, error)
+	Delete(id int) error
 }
 
 type BlogModel struct {
@@ -22,8 +23,19 @@ type BlogModel struct {
 }
 
 func (b *BlogModel) Insert(ownerID int, name string) (int, error) {
-	//TODO implement me
-	panic("implement me")
+	insertStmt := `INSERT INTO blogs (owner_id, name) 
+	VALUES (?, ?)`
+	_, err := b.DB.Exec(insertStmt, ownerID, name)
+	if err != nil {
+		return 0, err
+	}
+	idStmt := `SELECT LAST_INSERT_ID()`
+	var id int
+	err = b.DB.QueryRow(idStmt).Scan(&id)
+	if err != nil {
+		return 0, err
+	}
+	return id, nil
 }
 
 func (b *BlogModel) Get(id int) (*Blog, error) {
@@ -61,4 +73,14 @@ func (b *BlogModel) GetByOwner(id int) ([]*Blog, error) {
 	}
 	return blogs, nil
 
+}
+
+func (b *BlogModel) Delete(id int) error {
+	stmt := `DELETE FROM blogs
+	WHERE id = ?`
+	_, err := b.DB.Exec(stmt, id)
+	if err != nil {
+		return err
+	}
+	return nil
 }

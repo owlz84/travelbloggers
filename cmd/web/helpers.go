@@ -10,7 +10,17 @@ import (
 	"net/http"
 	"runtime/debug"
 	"time"
+	"travelbloggers/internal/models"
 )
+
+type templateData struct {
+	CurrentYear     int
+	Post            *models.Post
+	Posts           []*models.Post
+	Form            any
+	Flash           string
+	IsAuthenticated bool
+}
 
 func (app *application) newTemplateData(r *http.Request) *templateData {
 	return &templateData{
@@ -20,10 +30,14 @@ func (app *application) newTemplateData(r *http.Request) *templateData {
 	}
 }
 
-func (app *application) render(w http.ResponseWriter, status int, data *templateData, files ...string) {
+func (app *application) render(w http.ResponseWriter, status int, data *templateData, file string) {
 
 	ts := template.New("").Funcs(functions)
-	ts, err := ts.ParseFiles(files...) //template.ParseFiles(files...)
+	var files []string
+	files = append(files, "./ui/html/base.tmpl")
+	files = append(files, "./ui/html/partials/nav.tmpl")
+	files = append(files, file)
+	ts, err := ts.ParseFiles(files...)
 	if err != nil {
 		app.serverError(w, err)
 		http.Error(w, "Internal Server Error", 500)
@@ -34,8 +48,6 @@ func (app *application) render(w http.ResponseWriter, status int, data *template
 
 	w.WriteHeader(status)
 
-	// Execute the template set and write the response body. Again, if there
-	// is any error we call the serverError() helper.
 	err = ts.ExecuteTemplate(buf, "base", data)
 	if err != nil {
 		app.serverError(w, err)

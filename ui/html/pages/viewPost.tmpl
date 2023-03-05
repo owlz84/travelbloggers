@@ -7,6 +7,7 @@
     <div class="box has-background-light has-text-dark">
         <div class="title is-2 has-text-grey">{{.Post.Title}}</div>
         <div class="block">Country: {{.Post.Country}}</div>
+        <div class="block">Location: {{.Post.Location}}</div>
         <div class="block">Date from: {{.Post.DateFrom | humanDate}}</div>
         <div class="block">Date to: {{.Post.DateTo | humanDate}}</div>
         <div class="content has-text-grey">{{.Post.Content | markdownProcessor}}</div>
